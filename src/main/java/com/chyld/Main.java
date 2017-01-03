@@ -3,6 +3,7 @@ package com.chyld;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -58,6 +59,20 @@ public class Main {
                 .filter(d -> d.getAge() < 10)
                 .collect(Collectors.toList());
 
-        //dogs.stream().
+        List<Integer> agesOfFemaleDogs = dogs
+                .stream()
+                .filter(d -> d.getGender() ==  Gender.FEMALE)
+                .map(d -> d.getAge())
+                .collect(Collectors.toList());
+
+        Optional<Dog> maybe = dogs
+                .parallelStream()
+                .filter(d -> d.getName().equals("Fido"))
+                .findFirst();
+
+        Dog d1 = maybe.get();
+        maybe.ifPresent(d -> {
+            System.out.println(d);
+        });
     }
 }
